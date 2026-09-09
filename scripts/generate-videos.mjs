@@ -244,6 +244,14 @@ body {
 .eng .etxt { margin-top: 5px; font-size: 12px; font-weight: 600; text-shadow: 0 1px 4px rgba(0,0,0,.6); }
 
 /* ---- Anims base ---- */
+@keyframes rotatesmall { to { transform: rotate(360deg); } }
+.compare { margin-top: 14px; display: grid; grid-template-columns: 1fr 1fr; gap: 12px; opacity: 0; transform: scale(.9); }
+#app.run .compare { opacity: 1; animation: resPop .5s cubic-bezier(.175,.885,.32,1.4) 3.8s both; }
+.cbox { background: #0F172A; border-radius: 16px; padding: 14px; text-align: center; }
+.cbox .l { color: #7c8aa5; font-size: 11px; font-weight: 700; }
+.cbox .v { color: #fff; font-size: 28px; font-weight: 900; margin-top: 4px; font-variant-numeric: tabular-nums; }
+.cbox.hl { background: linear-gradient(135deg, #059669, #047857); }
+.cbox.hl .l, .cbox.hl .v { color: #fff; }
 @keyframes animFade { from { opacity: 0; } }
 @keyframes animUp { from { opacity: 0; transform: translateY(16px); } }
 `;
@@ -315,14 +323,14 @@ function renderScene(s) {
 
   const calcBody = isComparar
     ? `
-    <div style="display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-top:16px">
-      <div style="background:#0F172A;border-radius:16px;padding:14px;text-align:center">
-        <div style="color:#7c8aa5;font-size:11px;font-weight:700">${s.label1}</div>
-        <div style="color:#fff;font-size:30px;font-weight:900;margin-top:4px;font-variant-numeric:tabular-nums">${s.valor1}</div>
+    <div class="compare">
+      <div class="cbox">
+        <div class="l">${s.label1}</div>
+        <div class="v">${s.valor1}</div>
       </div>
-      <div style="background:linear-gradient(135deg,#059669,#047857);border-radius:16px;padding:14px;text-align:center">
-        <div style="color:rgba(255,255,255,.8);font-size:11px;font-weight:700">${s.label2}</div>
-        <div id="rv2" style="color:#fff;font-size:30px;font-weight:900;margin-top:4px;font-variant-numeric:tabular-nums">0.00</div>
+      <div class="cbox hl">
+        <div class="l">${s.label2}</div>
+        <div class="v" id="rv2">0.00</div>
       </div>
     </div>`
     : isGratif || isCts
