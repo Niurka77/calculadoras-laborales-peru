@@ -3,6 +3,7 @@ import { Landmark, Info } from 'lucide-react';
 import { calcularCTS, formatSoles } from '../calculations';
 import ResultCard from './ResultCard';
 import AdBanner from './AdBanner';
+import CopyLinkButton from './CopyLinkButton';
 import YapePlinModal from './YapePlinModal';
 
 export default function CTS() {
@@ -109,6 +110,10 @@ export default function CTS() {
           </div>
 
           <AdBanner position="middle" />
+
+          <div className="bg-white rounded-2xl shadow-md p-4">
+            <CopyLinkButton />
+          </div>
 
           <div className="bg-white rounded-2xl shadow-md p-4">
             <p className="text-sm font-semibold text-gray-700 mb-2">¿Necesitas la Plantilla Excel?</p>

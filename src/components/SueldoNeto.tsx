@@ -4,6 +4,7 @@ import { calcularSueldoNeto, formatSoles, type SistemaPension } from '../calcula
 import ResultCard from './ResultCard';
 import AdBanner from './AdBanner';
 import ShareButtons from './ShareButtons';
+import CopyLinkButton from './CopyLinkButton';
 import YapePlinModal from './YapePlinModal';
 import jsPDF from 'jspdf';
 
@@ -267,7 +268,10 @@ export default function SueldoNeto() {
           <AdBanner position="middle" />
 
           <div className="bg-white rounded-2xl shadow-md p-4">
-            <p className="text-sm font-semibold text-gray-700 mb-3">Compartir resultado</p>
+            <div className="flex items-center justify-between mb-3">
+              <p className="text-sm font-semibold text-gray-700">Compartir resultado</p>
+              <CopyLinkButton />
+            </div>
             <ShareButtons text={shareText} />
           </div>
 

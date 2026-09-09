@@ -3,6 +3,7 @@ import { Gift, Info, TrendingUp } from 'lucide-react';
 import { calcularGratificacion, formatSoles, UIT } from '../calculations';
 import ResultCard from './ResultCard';
 import AdBanner from './AdBanner';
+import CopyLinkButton from './CopyLinkButton';
 
 export default function Gratificacion() {
   const [sueldo, setSueldo] = useState<number>(0);
@@ -80,6 +81,10 @@ export default function Gratificacion() {
                 </p>
               </div>
             </div>
+          </div>
+
+          <div className="bg-white rounded-2xl shadow-md p-4">
+            <CopyLinkButton />
           </div>
 
           <AdBanner position="bottom" />
