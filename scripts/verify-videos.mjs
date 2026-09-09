@@ -14,20 +14,37 @@ function frameStats(file, t) {
   if (buf.status !== 0) return null;
   const data = buf.stdout;
   const expected = W * H * 3;
-  if (data.length !== expected) return { error: 'bad size ' + data.length + ' vs ' + expected };
+  if (data.length !== expected) return null;
 
-  let green = 0, white = 0, midWhite = 0;
-  let sampleOk = false;
-  for (let y = 300; y < 1450; y += 3) {
-    for (let x = 60; x < 1020; x += 3) {
+  // Resultado (zona band ~ y 880-1070, x 300-780): deben abundar verdes
+  let greenBand = 0;
+  for (let y = 890; y < 1060; y += 2) {
+    for (let x = 320; x < 760; x += 2) {
       const i = (y * W + x) * 3;
       const r = data[i], g = data[i + 1], b = data[i + 2];
-      if (g > r * 1.6 && g > b * 1.4 && g > 80) green++;
+      if (g > r * 1.6 && g > b * 1.4 && g > 80) greenBand++;
+    }
+  }
+  // Texto blanco grande en pantalla completa
+  let white = 0, midWhite = 0;
+  for (let y = 200; y < 1400; y += 3) {
+    for (let x = 40; x < 1040; x += 3) {
+      const i = (y * W + x) * 3;
+      const r = data[i], g = data[i + 1], b = data[i + 2];
       if (r > 225 && g > 225 && b > 225) white++;
       if (r > 190 && g > 190 && b > 190) midWhite++;
     }
   }
-  return { green, white, midWhite };
+  // Barra de progreso (y ~ 428)
+  let greenBar = 0;
+  for (let y = 420; y < 450; y += 2) {
+    for (let x = 280; x < 800; x += 2) {
+      const i = (y * W + x) * 3;
+      const r = data[i], g = data[i + 1], b = data[i + 2];
+      if (g > r * 1.6 && g > b * 1.4 && g > 80) greenBar++;
+    }
+  }
+  return { greenBand, greenBar, white, midWhite };
 }
 
 const videos = readdirSync(OUT_DIR).filter((f) => f.endsWith('.mp4')).sort();
@@ -35,27 +52,27 @@ let allOk = true;
 const rows = [];
 for (const v of videos) {
   const file = join(OUT_DIR, v);
-  const s2 = frameStats(file, 3);
+  const s1 = frameStats(file, 1.1);
+  const s2p = frameStats(file, 2.2);
+  const s3 = frameStats(file, 3.0);
   const s7 = frameStats(file, 7.5);
 
-  const isComparar = v.includes('04-onp');
-  const minGreen = isComparar ? 800 : 150;
-  const minWhite = isComparar ? 220 : 400;
+  const tituloEnFrame = s1 && s1.white >= 120;
+  const progressEnFrame = s2p && s2p.greenBar >= 60;
+  const nadaAntes = !s3 || s3.greenBand < 40;
+  const resultado = s7 && s7.greenBand >= 400;
+  const textoOk = s7 && s7.white >= 300;
 
-  const hasResult = s7 && s7.green >= minGreen;
-  const hasText = s7 && s7.midWhite >= minWhite;
-  const earlyNoResult = !s2 || s2.green < 60;
-  const ok = hasResult && hasText && earlyNoResult;
+  const ok = tituloEnFrame && progressEnFrame && nadaAntes && resultado && textoOk;
   if (!ok) allOk = false;
 
   rows.push({
     video: v,
-    green3s: s2 ? s2.green : 'ERR',
-    green7s: s7 ? s7.green : 'ERR',
-    white7s: s7 ? s7.midWhite : 'ERR',
-    cardVerde: hasResult ? 'OK' : 'FALTA',
-    texto: hasText ? 'OK' : 'FALTA',
-    timing: earlyNoResult ? 'OK' : 'MUY TEMPRANO',
+    titulo1s: tituloEnFrame ? 'OK' : 'FALTA',
+    progress2s: progressEnFrame ? 'OK' : 'FALTA',
+    before3s: nadaAntes ? 'OK' : 'VERDE ANTES',
+    band7s: resultado ? 'OK' : 'FALTA',
+    texto7s: textoOk ? 'OK' : 'FALTA',
     estado: ok ? 'PASA' : 'REVISA',
   });
 }

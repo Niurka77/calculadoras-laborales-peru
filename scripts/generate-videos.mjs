@@ -9,6 +9,8 @@ const SCENES = [
     sueldo: '2,500',
     descuento: '315.50',
     neto: '2,184.50',
+    big1: 'TE PROMETIERON',
+    big2: 'S/ 2,500 💵',
     hook: 'Te prometieron S/ 2,500 en planilla pero a tu banco llega esto 🤯',
     cta: '¿Te ha pasado? Comenta tu caso',
     likes: 1240,
@@ -22,6 +24,8 @@ const SCENES = [
     sueldo: '1,800',
     bonif: '972.00',
     total: '11,772.00',
+    big1: 'S/ 1,800',
+    big2: 'YA NO ES MISTERIO 🎁',
     hook: 'Tu gratificaci\u00f3n de S/ 1,800 ya no es un misterio 🎁',
     cta: 'Gu\u00e1rdalo para diciembre',
     likes: 1983,
@@ -35,6 +39,8 @@ const SCENES = [
     sueldo: '4,000',
     descuento: '504.80',
     neto: '3,495.20',
+    big1: 'GANAS S/ 4,000',
+    big2: 'Y SUNAT RETIENE 🤐',
     hook: 'Ganas S/ 4,000 y la SUNAT te retiene 5ta categor\u00eda 🤐',
     cta: 'Aprende a calcular tu retenci\u00f3n',
     likes: 1520,
@@ -50,6 +56,8 @@ const SCENES = [
     valor1: '1,740.00',
     label2: 'AFP',
     valor2: '1,747.60',
+    big1: 'ONP vs AFP',
+    big2: 'CON S/ 2,000 👀',
     hook: 'ONP vs AFP con S/ 2,000 \u2014 la diferencia te sorprende 👀',
     cta: 'Prueba los dos gratis',
     likes: 3470,
@@ -63,6 +71,8 @@ const SCENES = [
     sueldo: '2,200',
     cts: '2,200.00',
     interes: '82.50',
+    big1: 'TU CTS EST\u00c1',
+    big2: 'DURMIENDO 😳',
     hook: 'Tu CTS est\u00e1 durmiendo y podr\u00eda darte S/ 82.50 😳',
     cta: 'Mueve tu CTS a un banco que pague',
     likes: 2210,
@@ -76,6 +86,8 @@ const SCENES = [
     sueldo: '1,025',
     descuento: '129.36',
     neto: '895.64',
+    big1: 'SUELDO M\u00cdNIMO',
+    big2: 'S/ 1,025 ⚡',
     hook: 'El sueldo m\u00ednimo S/ 1,025 \u2014 incluso as\u00ed descuentan ⚡',
     cta: 'Cu\u00e1nto te queda a ti?',
     likes: 5390,
@@ -89,6 +101,8 @@ const SCENES = [
     sueldo: '2,500',
     descuento: '315.50',
     neto: '2,184.50',
+    big1: 'HORAS EXTRAS',
+    big2: 'NO VAN A TU GRATI 🤔',
     hook: 'S/ 500 de horas extras \u2192 pagan AFP pero NO gratificaci\u00f3n 🤔',
     cta: 'Simula tus horas extra',
     likes: 1670,
@@ -102,6 +116,8 @@ const SCENES = [
     sueldo: '3,500',
     descuento: '441.70',
     neto: '3,058.30',
+    big1: 'CONTADOR/A',
+    big2: 'CON S/ 3,500 🧾',
     hook: 'Contador/a con S/ 3,500 \u2014 esto te retiene el estado 🧾',
     cta: 'Manda esto a tu equipo',
     likes: 980,
@@ -115,6 +131,8 @@ const SCENES = [
     sueldo: '5,000',
     descuento: '669.67',
     neto: '4,330.33',
+    big1: 'GANO S/ 5,000',
+    big2: 'PERO NO ES TODO 💀',
     hook: '\u201cGano S/ 5,000\u201d \u2026 pero en el banco caen S/ 4,330 💀',
     cta: 'Nunca negocies sin calcular',
     likes: 4120,
@@ -128,6 +146,8 @@ const SCENES = [
     sueldo: '2,800',
     descuento: '353.36',
     neto: '2,446.64',
+    big1: 'TU SUELDO NETO',
+    big2: 'EN 1 SEGUNDO 🚀',
     hook: 'Tu sueldo neto en \u00a01 segundo! Sin registros ni nada 🚀',
     cta: 'Gu\u00e1rdalo y pru\u00e9balo',
     likes: 7850,
@@ -139,72 +159,196 @@ const SCENES = [
 const CSS = `
 * { margin: 0; padding: 0; box-sizing: border-box; }
 html, body { height: 100%; }
-body {
-  background: #000;
-  overflow: hidden;
-}
-.scene { position: relative; width: 100vw; height: 100vh; background: #0F172A; overflow: hidden; }
+body { background: #000; overflow: hidden; }
+.scene { position: relative; width: 100vw; height: 100vh; overflow: hidden; }
 
-/* ---- Barra superior TikTok ---- */
+/* ---- Fondo con glow + vi\u00f1eta ---- */
+.bg {
+  position: absolute; inset: 0;
+  background:
+    radial-gradient(120% 70% at 50% 28%, #13203b 0%, #0b1120 55%, #05070f 100%);
+}
+.glow {
+  position: absolute; left: 50%; top: 30%; width: 720px; height: 720px;
+  transform: translate(-50%, -50%);
+  background: radial-gradient(circle, rgba(16,185,129,.22) 0%, rgba(16,185,129,0) 65%);
+}
+.vg {
+  position: absolute; inset: 0;
+  background: radial-gradient(125% 80% at 50% 38%, rgba(0,0,0,0) 55%, rgba(0,0,0,.5) 100%);
+  z-index: 4; pointer-events: none;
+}
+.wrap { position: absolute; inset: 0; z-index: 6; }
+
+/* ---- Pill de marca ---- */
+.pill {
+  position: absolute; top: 64px; left: 50%; transform: translateX(-50%);
+  display: flex; align-items: center; gap: 8px;
+  background: rgba(255,255,255,.07); border: 1px solid rgba(255,255,255,.14);
+  padding: 10px 18px; border-radius: 999px;
+  color: #fff; font-family: 'Inter', system-ui, sans-serif; font-size: 13px; font-weight: 700; letter-spacing: .4px;
+  opacity: 0;
+}
+#app.run .pill { opacity: 1; animation: animFade .3s ease .15s both; }
+.pill .dot { width: 10px; height: 10px; border-radius: 50%; background: #10B981; box-shadow: 0 0 12px #10B981; animation: pulse 1.6s ease infinite; }
+@keyframes pulse { 50% { transform: scale(1.5); } }
+
+/* ---- T\u00edtulo gigante ---- */
+.title { position: absolute; top: 128px; left: 0; right: 0; text-align: center; padding: 0 26px; z-index: 7; }
+.tl1 {
+  font-family: 'Anton', 'Arial Black', sans-serif; font-weight: 400; text-transform: uppercase;
+  font-size: 74px; line-height: .98; color: #fff; letter-spacing: 1px;
+  text-shadow: 0 2px 0 #000, 0 6px 0 rgba(0,0,0,.35), 0 18px 40px rgba(0,0,0,.6);
+  opacity: 0;
+}
+#app.run .tl1 { opacity: 1; animation: slam .34s cubic-bezier(.175,.885,.32,1.4) .2s both; }
+@keyframes slam { 0% { opacity: 0; transform: scale(.6) translateY(30px); } 60% { opacity: 1; transform: scale(1.05); } 100% { opacity: 1; transform: scale(1); } }
+.tl2 {
+  font-family: 'Anton', 'Arial Black', sans-serif; font-weight: 400; text-transform: uppercase;
+  font-size: 100px; line-height: 1; color: #fff; letter-spacing: 1px; margin-top: 10px;
+  text-shadow: 0 3px 0 #000, 0 8px 0 rgba(0,0,0,.35), 0 24px 50px rgba(0,0,0,.7);
+  opacity: 0;
+}
+#app.run .tl2 { opacity: 1; animation: upIn .4s cubic-bezier(.175,.885,.32,1.3) .55s both; }
+@keyframes upIn { from { opacity: 0; transform: translateY(34px); } }
+
+/* ---- Barra de progreso ---- */
+.progress { position: absolute; top: 428px; left: 50%; transform: translateX(-50%); width: 640px; opacity: 0; }
+#app.run .progress { opacity: 1; animation: animFade .25s ease 1.05s both; }
+.loadbar { height: 14px; border-radius: 999px; background: rgba(255,255,255,.08); overflow: hidden; position: relative; }
+.loadbar .fill {
+  height: 100%; width: 0; border-radius: 999px;
+  background: linear-gradient(90deg, #059669, #10B981);
+  box-shadow: 0 0 16px rgba(16,185,129,.8);
+}
+#app.run .loadbar .fill { animation: fillIn .7s cubic-bezier(.2,.85,.25,1) 1.35s forwards; }
+@keyframes fillIn { to { width: 92%; } }
+
+/* ---- Card calculadora ---- */
+.card {
+  position: absolute; top: 470px; left: 50%; transform: translateX(-50%);
+  width: 660px; background: rgba(15,23,42,.72); border: 1px solid rgba(255,255,255,.1);
+  border-radius: 30px; padding: 26px 30px 24px;
+  box-shadow: 0 30px 70px rgba(0,0,0,.55), inset 0 1px 0 rgba(255,255,255,.06);
+  backdrop-filter: blur(8px);
+  opacity: 0; transform: translateX(-50%) translateY(30px);
+  font-family: 'Inter', system-ui, sans-serif;
+}
+#app.run .card { opacity: 1; animation: upIn .5s cubic-bezier(.175,.885,.32,1.2) 1.35s both; }
+.label { color: #7c8aa5; font-size: 12px; font-weight: 700; text-transform: uppercase; letter-spacing: .7px; }
+.val { color: #fff; font-size: 64px; font-weight: 900; margin-top: 6px; font-variant-numeric: tabular-nums; display: flex; align-items: center; }
+.val .cur { color: #7c8aa5; font-size: 34px; font-weight: 800; margin-right: 10px; }
+.val .caret { width: 5px; height: 46px; background: #10B981; margin-left: 8px; border-radius: 3px; box-shadow: 0 0 12px #10B981; }
+#app.run .val .caret { animation: blink .7s steps(1) 0s 4; }
+@keyframes blink { 50% { opacity: 0; } }
+.status { color: #7c8aa5; font-size: 14px; margin-top: 16px; opacity: 0; }
+#app.run .status { opacity: 1; animation: animFade .3s ease 1.9s both; }
+.status .spin { display: inline-block; }
+#app.run .status .spin { animation: rotate .9s linear infinite; }
+@keyframes rotate { to { transform: rotate(360deg); } }
+.row { display: flex; justify-content: space-between; color: #cbd5e1; font-size: 15px; margin-top: 18px; padding-top: 14px; border-top: 1px dashed rgba(255,255,255,.12); font-variant-numeric: tabular-nums; opacity: 0; }
+#app.run .row { opacity: 1; animation: animFade .3s ease 2.6s both; }
+.row b { color: #fff; }
+
+/* ---- Band / result ---- */
+.band {
+  position: absolute; top: 880px; left: 50%; transform: translateX(-50%);
+  width: 760px;
+  background: linear-gradient(135deg, #059669, #047857);
+  border-radius: 30px; padding: 26px 30px 24px; text-align: center;
+  box-shadow: 0 30px 60px rgba(4,120,87,.5), 0 0 0 3px rgba(255,255,255,.14), 0 0 60px rgba(16,185,129,.35);
+  font-family: 'Inter', system-ui, sans-serif;
+  opacity: 0; transform: translateX(-50%) scale(.5);
+}
+#app.run .band { opacity: 1; animation: resPop .45s cubic-bezier(.175,.885,.32,1.5) 3.3s both; }
+@keyframes resPop { 0% { opacity: 0; transform: translateX(-50%) scale(.5); } 70% { transform: translateX(-50%) scale(1.05); } 100% { opacity: 1; transform: translateX(-50%) scale(1); } }
+#app.run .shakeWrap { animation: shake .32s linear 3.3s both; }
+@keyframes shake {
+  10%,90% { transform: translate(-2px, 1px); }
+  20%,80% { transform: translate(3px, -2px); }
+  30%,50%,70% { transform: translate(-5px, 3px); }
+  40%,60% { transform: translate(5px, -3px); }
+}
+.band .k { color: rgba(255,255,255,.85); font-size: 15px; font-weight: 800; text-transform: uppercase; letter-spacing: 1px; }
+.band .rv {
+  font-family: 'Anton', 'Arial Black', sans-serif; font-weight: 400;
+  font-size: 116px; line-height: 1.05; color: #fff; margin-top: 4px;
+  font-variant-numeric: tabular-nums;
+  text-shadow: 0 3px 0 rgba(0,0,0,.25), 0 12px 30px rgba(0,0,0,.35);
+}
+.band .badge {
+  position: absolute; top: -16px; right: -14px; background: #FFD23F; color: #0F172A;
+  font-size: 13px; font-weight: 900; padding: 6px 12px; border-radius: 20px;
+  transform: rotate(4deg); box-shadow: 0 6px 16px rgba(0,0,0,.35);
+  font-family: 'Inter', system-ui, sans-serif;
+}
+.band.small .rv { font-size: 84px; }
+
+/* ---- Compare (band reemplazado) ---- */
+.compare { position: absolute; top: 880px; left: 50%; transform: translateX(-50%); width: 760px; display: grid; grid-template-columns: 1fr 1fr; gap: 16px; opacity: 0; }
+#app.run .compare { opacity: 1; animation: resPop .45s cubic-bezier(.175,.885,.32,1.5) 3.3s both; }
+.cbox { background: rgba(15,23,42,.8); border: 1px solid rgba(255,255,255,.12); border-radius: 28px; padding: 26px 16px 20px; text-align: center; font-family: 'Inter', system-ui, sans-serif; box-shadow: 0 24px 50px rgba(0,0,0,.4); }
+.cbox .l { color: #7c8aa5; font-size: 14px; font-weight: 800; text-transform: uppercase; letter-spacing: .5px; }
+.cbox .v { font-family: 'Anton', sans-serif; font-size: 62px; color: #fff; margin-top: 6px; font-variant-numeric: tabular-nums; }
+.cbox.hl { background: linear-gradient(135deg, #059669, #047857); border-color: rgba(255,255,255,.25); box-shadow: 0 24px 60px rgba(4,120,87,.5), 0 0 50px rgba(16,185,129,.35); }
+.cbox.hl .l, .cbox.hl .v { color: #fff; }
+
+/* ---- CTA pill ---- */
+.cta {
+  position: absolute; top: 1210px; left: 50%; transform: translateX(-50%) scale(.4);
+  display: flex; align-items: center; gap: 8px;
+  background: #fff; color: #0F172A; padding: 14px 26px; border-radius: 999px;
+  font-family: 'Inter', system-ui, sans-serif; font-size: 17px; font-weight: 900; letter-spacing: .3px;
+  box-shadow: 0 16px 40px rgba(0,0,0,.5);
+  opacity: 0;
+}
+#app.run .cta { opacity: 1; animation: ctaPop .45s cubic-bezier(.175,.885,.32,1.5) 6s both; }
+@keyframes ctaPop { 0% { opacity: 0; transform: translateX(-50%) scale(.4); } 70% { transform: translateX(-50%) scale(1.06); } 100% { opacity: 1; transform: translateX(-50%) scale(1); } }
+.cta .arrow { width: 22px; height: 22px; }
+
+/* ---- Burst de emojis ---- */
+.burst { position: absolute; top: 0; left: 0; right: 0; height: 260px; z-index: 8; pointer-events: none; }
+.burst span { position: absolute; top: 40%; font-size: 56px; opacity: 0; }
+.burst b:nth-child(1) { left: 18%; }
+.burst b:nth-child(2) { left: 44%; }
+.burst b:nth-child(3) { left: 70%; }
+.burst b:nth-child(4) { left: 86%; }
+#app.run .burst span { animation: flyUp 1.4s ease-out 3.55s both; }
+@keyframes flyUp {
+  0% { opacity: 0; transform: translateY(40px) scale(.4) rotate(0deg); }
+  25% { opacity: 1; transform: translateY(0) scale(1.15) rotate(-12deg); }
+  100% { opacity: 0; transform: translateY(-150px) scale(1) rotate(18deg); }
+}
+
+/* ---- Barra superior ---- */
 .topbar {
-  position: absolute; top: 0; left: 0; right: 0;
-  z-index: 20; padding: 14px 12px 20px;
+  position: absolute; top: 0; left: 0; right: 0; z-index: 20; padding: 14px 12px 20px;
   display: flex; align-items: center; justify-content: space-between;
-  background: linear-gradient(to bottom, rgba(0,0,0,.45), transparent);
+  background: linear-gradient(to bottom, rgba(0,0,0,.5), transparent);
   color: #fff; font-family: 'Inter', system-ui, sans-serif;
   opacity: 0;
 }
-#app.run .topbar { opacity: 1; animation: animFade .4s ease .4s both; }
+#app.run .topbar { opacity: 1; animation: animFade .4s ease 4.2s both; }
 .follow { font-size: 13px; font-weight: 600; margin-right: 4px; opacity: .85; }
 .foryou { font-size: 15px; font-weight: 800; border-bottom: 2px solid #fff; padding-bottom: 2px; }
 .topicons { display: flex; gap: 10px; }
 .topicons div { width: 14px; height: 14px; border-radius: 4px; border: 1.5px solid #fff; position: relative; }
 
-/* ---- Calculadora (promo de pantalla) ---- */
-.calc { position: absolute; inset: 0; padding: 70px 18px 180px; z-index: 5; font-family: 'Inter', system-ui, sans-serif; display: flex; flex-direction: column; }
-.ctab-brand { display: flex; align-items: center; justify-content: center; gap: 8px; color: #fff; font-weight: 800; font-size: 15px; letter-spacing: .3px; opacity: 0; margin-bottom: 18px; }
-#app.run .ctab-brand { opacity: 1; animation: animFade .3s ease .5s both; }
-.ctab-brand .dot { width: 14px; height: 14px; border-radius: 50%; background: #059669; box-shadow: 0 0 14px #059669; }
-.iphone { background: #1E293B; border-radius: 24px; padding: 22px 20px; box-shadow: 0 20px 50px rgba(0,0,0,.5); opacity: 0; transform: translateY(20px); }
-#app.run .iphone { opacity: 1; animation: animUp .45s ease 1s both; }
-.label { color: #7c8aa5; font-size: 11px; font-weight: 700; text-transform: uppercase; letter-spacing: .6px; }
-.val { color: #fff; font-size: 56px; font-weight: 900; margin-top: 6px; font-variant-numeric: tabular-nums; display: flex; }
-.val .cur { color: #7c8aa5; font-size: 30px; font-weight: 800; margin-right: 8px; align-self: flex-start; margin-top: 8px; }
-.val .caret { width: 4px; height: 42px; background: #059669; margin-left: 6px; align-self: center; }
-#app.run .val .caret { animation: blink .7s steps(1) 0s 4; }
-@keyframes blink { 50% { opacity: 0; } }
-.status { color: #7c8aa5; font-size: 13px; margin-top: 14px; opacity: 0; }
-#app.run .status { opacity: 1; animation: animFade .3s ease 2.4s both; }
-.status .spin { display: inline-block; }
-#app.run .status .spin { animation: rotate .9s linear infinite; }
-@keyframes rotate { to { transform: rotate(360deg); } }
-.row { display: flex; justify-content: space-between; color: #cbd5e1; font-size: 14px; margin-top: 16px; font-variant-numeric: tabular-nums; opacity: 0; }
-#app.run .row { opacity: 1; animation: animFade .3s ease 3.2s both; }
-.row b { color: #fff; }
-.res { margin-top: 14px; background: linear-gradient(135deg, #059669, #047857); border-radius: 22px; padding: 20px; position: relative; opacity: 0; transform: scale(.9); }
-#app.run .res { opacity: 1; animation: resPop .5s cubic-bezier(.175,.885,.32,1.4) 3.8s both; }
-@keyframes resPop { 0% { opacity: 0; transform: scale(.85); } 70% { transform: scale(1.03); } 100% { opacity: 1; transform: scale(1); } }
-.res .rl { color: rgba(255,255,255,.85); font-size: 12px; font-weight: 700; text-transform: uppercase; letter-spacing: .6px; }
-.res .rv { color: #fff; font-size: 52px; font-weight: 900; margin-top: 4px; font-variant-numeric: tabular-nums; }
-.res .badge { position: absolute; top: -10px; right: 14px; background: #F59E0B; color: #0F172A; font-size: 11px; font-weight: 900; padding: 5px 10px; border-radius: 20px; transform: rotate(5deg); }
-.spacer { flex: 1; }
-
-/* ---- Columna de acciones TikTok (derecha) ---- */
+/* ---- Rail ---- */
 .rail { position: absolute; right: 10px; bottom: 210px; z-index: 20; display: flex; flex-direction: column; align-items: center; gap: 18px; opacity: 0; font-family: 'Inter', system-ui; }
-#app.run .rail { opacity: 1; animation: animUp .4s ease 4.2s both; }
+#app.run .rail { opacity: 1; animation: animUp .4s ease 4.4s both; }
 .av { width: 46px; height: 46px; border-radius: 50%; border: 2px solid #fff; background: linear-gradient(135deg,#1E3A8A,#059669); display: flex; align-items: center; justify-content: center; position: relative; }
 .av .plus { position: absolute; bottom: -7px; left: 50%; transform: translateX(-50%); width: 17px; height: 17px; border-radius: 50%; background: #FE2C55; color: #fff; font-size: 11px; font-weight: 900; display: flex; align-items: center; justify-content: center; box-shadow: 0 2px 6px rgba(0,0,0,.4); }
 .abtn { display: flex; flex-direction: column; align-items: center; color: #fff; font-size: 10px; font-weight: 600; gap: 3px; }
 .abtn .ic { width: 32px; height: 32px; display: flex; align-items: center; justify-content: center; filter: drop-shadow(0 2px 4px rgba(0,0,0,.5)); }
 .abtn .ic svg { width: 30px; height: 30px; fill: #fff; }
-.heart .ic svg { fill: #fff; transition: fill .2s; }
-#app.run .heart .ic svg { animation: heartBeat 1s ease 4.6s 2; }
+#app.run .heart .ic svg { animation: heartBeat 1s ease 4.9s 2; }
 @keyframes heartBeat { 0%,100% { transform: scale(1); } 30% { transform: scale(1.35); fill: #FE2C55; } 60% { transform: scale(1); } }
 .disc { width: 46px; height: 46px; border-radius: 50%; background: linear-gradient(135deg,#1E3A8A,#059669); display: flex; align-items: center; justify-content: center; margin-top: 8px; }
 .disc .dd { width: 20px; height: 20px; border-radius: 50%; background: #0F172A; }
 #app.run .disc { animation: rotate 4s linear infinite 5s; }
 
-/* ---- Caption (izquierda abajo) ---- */
+/* ---- Caption ---- */
 .caption { position: absolute; left: 14px; right: 78px; bottom: 150px; z-index: 20; color: #fff; font-family: 'Inter', system-ui, sans-serif; opacity: 0; transform: translateY(14px); }
 #app.run .caption { opacity: 1; animation: animUp .5s ease 5.6s both; }
 .caption .user { font-size: 15px; font-weight: 800; margin-bottom: 8px; }
@@ -213,19 +357,19 @@ body {
 .caption .music { display: flex; align-items: center; gap: 7px; margin-top: 10px; font-size: 13px; font-weight: 600; text-shadow: 0 1px 4px rgba(0,0,0,.6); }
 .caption .music .note { font-size: 16px; }
 
-/* ---- Nav inferior TikTok ---- */
+/* ---- Nav ---- */
 .navbottom { position: absolute; bottom: 0; left: 0; right: 0; z-index: 20; height: 60px; background: rgba(6,8,16,.92); display: flex; align-items: center; justify-content: space-around; color: #fff; font-family: 'Inter', system-ui, sans-serif; opacity: 0; }
-#app.run .navbottom { opacity: 1; animation: animUp .4s ease 4s both; }
+#app.run .navbottom { opacity: 1; animation: animUp .4s ease 4.2s both; }
 .nb { display: flex; flex-direction: column; align-items: center; gap: 3px; font-size: 9px; font-weight: 600; opacity: .9; }
 .nb .ni { width: 20px; height: 20px; }
 .nb.mid { position: relative; }
 .nb.mid .ni { width: 36px; height: 36px; border-radius: 12px; background: linear-gradient(135deg,#1E3A8A,#059669); position: relative; margin-top: -18px; }
 .nb.mid .ni::after { content: '+'; position: absolute; inset: 0; display: flex; align-items: center; justify-content: center; font-size: 26px; font-weight: 800; }
 
-/* ---- Finger ojo ---- */
+/* ---- Finger ---- */
 .finger { position: absolute; z-index: 30; width: 40px; height: 40px; border-radius: 50%; background: rgba(255,255,255,.25); border: 2px solid rgba(255,255,255,.6); opacity: 0; }
 .finger::after { content: ''; position: absolute; top: 50%; left: 50%; width: 18px; height: 18px; border-radius: 50%; transform: translate(-50%,-50%); background: radial-gradient(circle at 35% 35%, #fff, #b7c0d1); }
-#app.run .finger { animation: tap 2.6s ease 1s both; }
+#app.run .finger { animation: tap 2.4s ease 1.6s both; }
 @keyframes tap {
   0% { opacity: 0; }
   10% { opacity: 1; transform: translate(0,0); }
@@ -236,24 +380,10 @@ body {
   100% { opacity: 0; }
 }
 
-/* ---- Overlays de engagement ---- */
-.eng { position: absolute; left: 14px; top: 30%; z-index: 25; color: #fff; font-family: 'Inter', system-ui, sans-serif; opacity: 0; transform: translateX(-30px); }
-#app.run .eng { opacity: 1; animation: engIn .35s ease 5.2s both; }
-@keyframes engIn { to { opacity: 1; transform: translateX(0); } }
-.eng .eav { width: 30px; height: 30px; border-radius: 50%; background: linear-gradient(135deg,#FB2C55,#B818B8); border: 2px solid #fff; box-shadow: 0 2px 8px rgba(0,0,0,.4); }
-.eng .etxt { margin-top: 5px; font-size: 12px; font-weight: 600; text-shadow: 0 1px 4px rgba(0,0,0,.6); }
-
 /* ---- Anims base ---- */
-@keyframes rotatesmall { to { transform: rotate(360deg); } }
-.compare { margin-top: 14px; display: grid; grid-template-columns: 1fr 1fr; gap: 12px; opacity: 0; transform: scale(.9); }
-#app.run .compare { opacity: 1; animation: resPop .5s cubic-bezier(.175,.885,.32,1.4) 3.8s both; }
-.cbox { background: #0F172A; border-radius: 16px; padding: 14px; text-align: center; }
-.cbox .l { color: #7c8aa5; font-size: 11px; font-weight: 700; }
-.cbox .v { color: #fff; font-size: 28px; font-weight: 900; margin-top: 4px; font-variant-numeric: tabular-nums; }
-.cbox.hl { background: linear-gradient(135deg, #059669, #047857); }
-.cbox.hl .l, .cbox.hl .v { color: #fff; }
 @keyframes animFade { from { opacity: 0; } }
 @keyframes animUp { from { opacity: 0; transform: translateY(16px); } }
+@keyframes rotatesmall { to { transform: rotate(360deg); } }
 `;
 
 const SVGS = {
@@ -264,22 +394,22 @@ const SVGS = {
   discover: `<svg viewBox="0 0 24 24"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm.15 12.15L9.5 9.5l4.7-2.65 2.65 4.65-4.7 2.65z"/></svg>`,
   inbox: `<svg viewBox="0 0 24 24"><path d="M20 2H4c-1.1 0-2 .9-2 2v12c0 1.1.9 2 2 2h14l4 4V4c0-1.1-.9-2-2-2zm-2 12H6v-2h12v2zm0-3H6V9h12v2zm0-3H6V6h12v2z"/></svg>`,
   profile: `<svg viewBox="0 0 24 24"><path d="M12 12c2.21 0 4-1.79 4-4s-1.79-4-4-4-4 1.79-4 4 1.79 4 4 4zm0 2c-2.67 0-8 1.34-8 4v2h16v-2c0-2.66-5.33-4-8-4z"/></svg>`,
-  live: `<svg viewBox="0 0 24 24"><path d="M3 3v18h18V3H3zm6 14H7v-2H5v-2h2v-2h2v6zm8 0h-2v-2h-2v-2h2v-2h2v6z" opacity=".5" fill="#FF3040"/><path d="M2 5h2v2H2zM4 7h2v2H4zM2 9h2v2H2z" fill="#FE2C55"/></svg>`,
+  live: `<svg viewBox="0 0 24 24"><path d="M20 2H4c-1.1 0-2 .9-2 2v12c0 1.1.9 2 2 2h14l4 4V4c0-1.1-.9-2-2-2zm-6 14h-2v-2h-2v-2h2v-2h2v6z" fill="#FE2C55"/></svg>`,
   search: `<svg viewBox="0 0 24 24"><path d="M15.5 14h-.79l-.28-.27C15.41 12.59 16 11.11 16 9.5 16 5.91 13.09 3 9.5 3S3 5.91 3 9.5 5.91 16 9.5 16c1.61 0 3.09-.59 4.23-1.57l.27.28v.79l5 4.99L20.49 19l-4.99-5zm-6 0C7.01 14 5 11.99 5 9.5S7.01 5 9.5 5 14 7.01 14 9.5 11.99 14 9.5 14z"/></svg>`,
+  arrow: `<svg viewBox="0 0 24 24"><path fill="none" stroke="#0F172A" stroke-width="3.4" stroke-linecap="round" stroke-linejoin="round" d="M5 12h14M13 6l6 6-6 6"/></svg>`,
 };
 
 function sceneJS(s) {
   const dv = s.tipo === 'neto' ? s.neto : s.tipo === 'gratif' ? s.total : s.tipo === 'cts' ? s.cts : s.valor1;
   const target = parseFloat(dv.replace(',', ''));
-  const mkTicker = (id) => `
-  const tv = document.getElementById('${id}');
-  const base = ${s.likes};
-  let tn = base;
-  function tick() { tn += Math.round(Math.random()*3); tv.textContent = tn >= 1000 ? (tn/1000).toFixed(1)+'K' : String(tn); }
+  const mkLikes = () => `
+  const lk = document.getElementById('likes');
+  let ln = ${s.likes};
+  function tick() { ln += Math.round(Math.random()*3); lk.textContent = ln >= 1000 ? (ln/1000).toFixed(1)+'K' : String(ln); }
   setInterval(tick, 900); tick();`;
-  const mkViewer = (id) => `
-  const vv = document.getElementById('${id}');
-  const vbase = 4851; let vn = vbase;
+  const mkViews = () => `
+  const vv = document.getElementById('views');
+  let vn = 4851;
   function vick() { vn += Math.round(Math.random()*5); vv.textContent = String(vn); }
   setInterval(vick, 700); vick();`;
   return `
@@ -298,11 +428,13 @@ function countUp(id, val, delay) {
   setTimeout(() => requestAnimationFrame(step), delay);
 }
 function play() {
+  window.__started = true;
+  window.__startedAt = performance.now();
   app.classList.add('run');
-  countUp('rv', ${target}, 3950);
-  ${s.tipo === 'comparar' ? `countUp('rv2', ${parseFloat(s.valor2.replace(',', ''))}, 4200);` : ''}
-  ${mkTicker('likes')}
-  ${mkViewer('views')}
+  countUp('rv', ${target}, 3400);
+  ${s.tipo === 'comparar' ? `countUp('rv2', ${parseFloat(s.valor2.replace(',', ''))}, 3650);` : ''}
+  ${mkLikes()}
+  ${mkViews()}
 }
 function restart() {
   app.classList.remove('run');
@@ -310,7 +442,11 @@ function restart() {
   setTimeout(() => { const e = document.getElementById('rv'); if (e) e.textContent = '0.00'; }, 120);
   setTimeout(play, 220);
 }
-window.addEventListener('load', play);
+if (document.fonts && document.fonts.ready) {
+  document.fonts.ready.then(play);
+} else {
+  window.addEventListener('load', play);
+}
 setInterval(restart, DU);
 `;
 }
@@ -320,31 +456,18 @@ function renderScene(s) {
   const isGratif = s.tipo === 'gratif';
   const isCts = s.tipo === 'cts';
   const tagsStr = s.hashtags.map((h) => '#' + h.replace('#', '')).join(' ');
+  const bandSmall = isGratif || isCts ? ' small' : '';
 
-  const calcBody = isComparar
+  const bandZone = isComparar
     ? `
     <div class="compare">
-      <div class="cbox">
-        <div class="l">${s.label1}</div>
-        <div class="v">${s.valor1}</div>
-      </div>
-      <div class="cbox hl">
-        <div class="l">${s.label2}</div>
-        <div class="v" id="rv2">0.00</div>
-      </div>
+      <div class="cbox"><div class="l">${s.label1}</div><div class="v">${s.valor1}</div></div>
+      <div class="cbox hl"><div class="l">${s.label2}</div><div class="v" id="rv2">0.00</div></div>
     </div>`
-    : isGratif || isCts
-      ? `
-    <div class="row"><span>${isCts ? 'Semestre' : 'Bonificaci\u00f3n EsSalud 9%'}</span><b>${isCts ? 'S/ 1,100.00' : '+ S/ ' + s.bonif}</b></div>
-    <div class="res">
-      <div class="rl">${isCts ? 'CTS a Depositar' : 'Gratificaci\u00f3n Total'}</div>
-      <div class="rv" id="rv">0.00</div>
-      ${isCts ? `<div class="badge">+S/ ${s.interes} inter\u00e9s</div>` : ''}
-    </div>`
-      : `
-    <div class="row"><span>Descuento pensi\u00f3n</span><b>- S/ ${s.descuento}</b></div>
-    <div class="res">
-      <div class="rl">Sueldo Neto</div>
+    : `
+    <div class="band${bandSmall}">
+      ${isGratif || isCts ? `<span class="badge">${isCts ? '+S/ ' + s.interes + ' inter\u00e9s' : '+9% EsSalud'}</span>` : ''}
+      <div class="k">${isGratif ? 'Gratificaci\u00f3n Total' : isCts ? 'CTS a Depositar' : 'Tu Sueldo Neto es'}</div>
       <div class="rv" id="rv">0.00</div>
     </div>`;
 
@@ -355,37 +478,44 @@ function renderScene(s) {
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>${s.hook.slice(0, 40)}</title>
 <style>
-@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Anton&family=Inter:wght@400;500;600;700;800;900&display=swap');
 ${CSS}
 </style>
 </head>
 <body>
 <div class="scene" id="app">
+  <div class="bg"></div>
+  <div class="glow"></div>
 
-  <div class="topbar">
-    <div style="display:flex;align-items:center;gap:10px">
-      <span class="follow">Siguiendo</span>
-      <span class="foryou">Para ti</span>
-    </div>
-    <div class="topicons">
-      <div style="display:flex;align-items:center;justify-content:center">${SVGS.live}</div>
-      <div style="display:flex;align-items:center;justify-content:center">${SVGS.search}</div>
-    </div>
+  <div class="pill"><span class="dot"></span> Calculadoras Laborales Per\u00fa</div>
+
+  <div class="title shakeWrap">
+    <div class="tl1">${s.big1}</div>
+    <div class="tl2">${s.big2}</div>
   </div>
 
-  <div class="calc">
-    <div class="ctab-brand"><span class="dot"></span> Calculadoras Laborales Per\u00fa</div>
-    <div class="iphone">
-      <div class="label">Sueldo Bruto Mensual</div>
-      <div class="val"><span class="cur">S/</span>${s.sueldo}<span class="caret"></span></div>
-      <div class="status"><span class="spin">&#8635;</span>&nbsp; Calculando AFP + 5ta categor\u00eda...</div>
-      ${calcBody}
-    </div>
-    <div class="spacer"></div>
-    <div style="text-align:center;color:rgba(255,255,255,.25);font-size:12px;font-family:Inter,sans-serif">calculadoras-laborales-peru.vercel.app</div>
+  <div class="progress"><div class="loadbar"><div class="fill"></div></div></div>
+
+  <div class="card">
+    <div class="label">Sueldo Bruto Mensual</div>
+    <div class="val"><span class="cur">S/</span>${s.sueldo}<span class="caret"></span></div>
+    <div class="status"><span class="spin">&#8635;</span>&nbsp; Calculando AFP + 5ta categor\u00eda...</div>
+    ${s.tipo !== 'comparar' && s.tipo !== 'gratif' && s.tipo !== 'cts'
+      ? `<div class="row"><span>Descuento pensi\u00f3n</span><b>- S/ ${s.descuento}</b></div>`
+      : isGratif
+        ? `<div class="row"><span>Bonificaci\u00f3n EsSalud 9%</span><b>+ S/ ${s.bonif}</b></div>`
+        : isCts
+          ? `<div class="row"><span>Semestre</span><b>S/ 1,100.00</b></div>`
+          : ''}
   </div>
 
-  <div class="finger" id="finger"></div>
+  <div class="burst"><span style="left:16%;font-size:64px">💸</span><span style="left:40%;font-size:48px;animation-delay:.12s">💰</span><span style="left:64%;font-size:56px;animation-delay:.06s">💸</span><span style="left:84%;font-size:44px;animation-delay:.18s">🤑</span></div>
+
+  ${bandZone}
+
+  <div class="cta"><span>${s.cta} →</span><span class="arrow">${SVGS.arrow}</span></div>
+
+  <div class="finger"></div>
 
   <div class="rail">
     <div class="av"><span style="font-size:26px;font-weight:900;color:#fff">N</span><span class="plus">+</span></div>
@@ -393,11 +523,6 @@ ${CSS}
     <div class="abtn"><span class="ic">${SVGS.comment}</span><span>${s.comentarios}</span></div>
     <div class="abtn"><span class="ic">${SVGS.share}</span><span>Compartir</span></div>
     <div class="disc"><div class="dd"></div></div>
-  </div>
-
-  <div class="eng">
-    <div class="eav" style="background:linear-gradient(135deg,#FB2C55,#B818B8)"></div>
-    <div class="etxt">a"gracias por esto"</div>
   </div>
 
   <div class="caption">
@@ -417,6 +542,7 @@ ${CSS}
 
   <div style="position:absolute;bottom:64px;left:14px;z-index:15;color:#fff;font-family:Inter,sans-serif;font-size:12px;font-weight:600;opacity:.9;text-shadow:0 1px 4px rgba(0,0,0,.6)"><span id="views">4,851</span> vistas</div>
 
+  <div class="vg"></div>
 </div>
 <script>
 ${sceneJS(s)}

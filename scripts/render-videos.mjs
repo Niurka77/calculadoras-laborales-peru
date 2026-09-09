@@ -26,11 +26,13 @@ const scenes = readdirSync(VIDEOS_DIR)
   .filter((f) => f.endsWith('.html') && !f.startsWith('README'))
   .sort();
 
-function convertToMp4(webmPath, outPath) {
+function convertToMp4(webmPath, outPath, seekSec) {
   return new Promise((resolve, reject) => {
     const args = [
       '-y',
+      ...(seekSec > 0 ? ['-ss', String(seekSec)] : []),
       '-i', webmPath,
+      '-t', String(DURATION_MS / 1000),
       '-vf', 'scale=1080:1920:force_original_aspect_ratio=decrease,pad=1080:1920:(ow-iw)/2:(oh-ih)/2:color=0x0a0f1e',
       '-r', String(FPS),
       '-c:v', 'libx264',
@@ -58,7 +60,11 @@ async function renderScene(browser, htmlFile, index) {
   });
 
   await page.goto('file:///' + join(VIDEOS_DIR, htmlFile).replace(/\\/g, '/'), { waitUntil: 'load' });
-  await page.waitForTimeout(DURATION_MS);
+  await page.waitForFunction(() => window.__started, null, { timeout: 20000 });
+  const startedAt = await page.evaluate(() => window.__startedAt);
+  const deadMs = Math.max(startedAt - 0, 0);
+
+  await page.waitForTimeout(DURATION_MS + deadMs + 300);
 
   const video = page.video();
   await page.close();
@@ -66,7 +72,7 @@ async function renderScene(browser, htmlFile, index) {
   const webmPath = await video.path();
 
   const outPath = join(OUT_DIR, htmlFile.replace('.html', '.mp4'));
-  await convertToMp4(webmPath, outPath);
+  await convertToMp4(webmPath, outPath, deadMs / 1000 - 0.05);
   console.log(`[${index + 1}/${scenes.length}] ${htmlFile} -> ${outPath}`);
 }
 
