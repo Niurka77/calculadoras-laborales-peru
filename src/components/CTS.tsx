@@ -3,10 +3,12 @@ import { Landmark, Info } from 'lucide-react';
 import { calcularCTS, formatSoles } from '../calculations';
 import ResultCard from './ResultCard';
 import AdBanner from './AdBanner';
+import YapePlinModal from './YapePlinModal';
 
 export default function CTS() {
   const [sueldo, setSueldo] = useState<number>(0);
   const [gratificaciones, setGratificaciones] = useState<number>(0);
+  const [showYapePlin, setShowYapePlin] = useState(false);
 
   const resultado = useMemo(() => {
     if (sueldo <= 0) return null;
@@ -113,19 +115,19 @@ export default function CTS() {
             <p className="text-xs text-gray-500 mb-3">
               Descarga la Plantilla con todas las fórmulas de Quinta Categoría y CTS 2026 actualizadas por S/ 9.90.
             </p>
-            <div className="flex gap-2">
-              <button className="flex-1 bg-gradient-to-r from-purple-500 to-purple-700 text-white py-3 rounded-xl font-bold text-sm hover:opacity-90 transition-opacity">
-                Yapear S/ 9.90
-              </button>
-              <button className="flex-1 bg-gradient-to-r from-cyan-500 to-cyan-700 text-white py-3 rounded-xl font-bold text-sm hover:opacity-90 transition-opacity">
-                Plin S/ 9.90
-              </button>
-            </div>
+            <button
+              onClick={() => setShowYapePlin(true)}
+              className="w-full bg-gradient-to-r from-purple-500 to-cyan-500 text-white py-3 rounded-xl font-bold text-sm hover:opacity-90 transition-opacity"
+            >
+              Obtener Plantilla Excel Pro - S/ 9.90
+            </button>
           </div>
 
           <AdBanner position="bottom" />
         </div>
       )}
+
+      <YapePlinModal isOpen={showYapePlin} onClose={() => setShowYapePlin(false)} />
     </div>
   );
 }

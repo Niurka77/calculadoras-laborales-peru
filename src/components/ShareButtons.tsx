@@ -1,9 +1,12 @@
 import { Share2, MessageCircle } from 'lucide-react';
 
+const SITE_URL = 'https://calculadoras-laborales-peru.vercel.app';
+
 export default function ShareButtons({ text }: { text: string }) {
-  const encoded = encodeURIComponent(text);
+  const message = `Hola, calcula tu sueldo neto y gratificación en soles aquí: ${SITE_URL}`;
+  const encoded = encodeURIComponent(message);
   const whatsappUrl = `https://wa.me/?text=${encoded}`;
-  const twitterUrl = `https://twitter.com/intent/tweet?text=${encoded}`;
+  const twitterUrl = `https://twitter.com/intent/tweet?text=${encodeURIComponent(text + ' ' + SITE_URL)}`;
 
   return (
     <div className="flex gap-2">

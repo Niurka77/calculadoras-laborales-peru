@@ -4,6 +4,7 @@ import { calcularSueldoNeto, formatSoles, type SistemaPension } from '../calcula
 import ResultCard from './ResultCard';
 import AdBanner from './AdBanner';
 import ShareButtons from './ShareButtons';
+import YapePlinModal from './YapePlinModal';
 import jsPDF from 'jspdf';
 
 function generarPDF(r: ReturnType<typeof calcularSueldoNeto>) {
@@ -79,6 +80,7 @@ export default function SueldoNeto() {
   const [horasExtras, setHorasExtras] = useState(0);
   const [tipoComision, setTipoComision] = useState<'flujo' | 'mixta'>('flujo');
   const [showDetail, setShowDetail] = useState(false);
+  const [showYapePlin, setShowYapePlin] = useState(false);
 
   const resultado = useMemo(() => {
     if (sueldo <= 0) return null;
@@ -286,19 +288,18 @@ export default function SueldoNeto() {
             <p className="text-xs text-gray-500 mb-3">
               ¿Eres contador o administras un negocio? Descarga la Plantilla con todas las fórmulas de Quinta Categoría y CTS 2026 actualizadas.
             </p>
-            <div className="flex gap-2">
-              <button className="flex-1 bg-gradient-to-r from-purple-500 to-purple-700 text-white py-3 rounded-xl font-bold text-sm hover:opacity-90 transition-opacity">
-                Yapear S/ 9.90
-              </button>
-              <button className="flex-1 bg-gradient-to-r from-cyan-500 to-cyan-700 text-white py-3 rounded-xl font-bold text-sm hover:opacity-90 transition-opacity">
-                Plin S/ 9.90
-              </button>
-            </div>
+            <button
+              onClick={() => setShowYapePlin(true)}
+              className="w-full bg-gradient-to-r from-purple-500 to-cyan-500 text-white py-3 rounded-xl font-bold text-sm hover:opacity-90 transition-opacity"
+            >
+              Obtener Plantilla Excel Pro - S/ 9.90
+            </button>
           </div>
         </div>
       )}
 
       <AdBanner position="bottom" />
+      <YapePlinModal isOpen={showYapePlin} onClose={() => setShowYapePlin(false)} />
     </div>
   );
 }

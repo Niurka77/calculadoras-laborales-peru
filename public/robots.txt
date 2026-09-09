@@ -1,0 +1,4 @@
+User-agent: *
+Allow: /
+
+Sitemap: https://calculadoras-laborales-peru.vercel.app/sitemap.xml
