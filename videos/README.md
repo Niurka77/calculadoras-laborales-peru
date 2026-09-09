@@ -39,6 +39,26 @@ el uso de la calculadora en un telefono y se repite sola cada ~12 segundos.
 | 09-sueldo-gross-5000.html | Sueldo gross | S/ 5,000 → neto S/ 4,330.33 |
 | 10-calculadora-rapida-2800.html | Velocidad | S/ 2,800 → neto S/ 2,446.64 |
 
+## Formato listo para subir
+
+Los videos MP4 (en `videos-mp4/`) ya incluyen la interfaz de TikTok:
+barra "Para ti", iconos de likes/comentarios/compartir animados,
+usuario @calculadoras.pe, sonido original, contador de vistas en vivo,
+nav inferior y un dedo que toca la pantalla.
+
+### Al subirlos a TikTok
+
+1. Sube el MP4 directo (no lo grabes de nuevo)
+2. Elige un sonido en tendencia como MUSICA (el video ya no lleva audio)
+3. En el campo de descripcion usa el texto del archivo TiktokPrompts.md
+4. En el boton de musica cambia la etiqueta a tu cancion elegida
+
+## Nota
+
+Si el render sale con cualquier corte de edicion, regenera con:
+node scripts/generate-videos.mjs
+node scripts/render-videos.mjs
+
 ## Tips
 
 - Publica 1 escena por dia durante 10 dias
