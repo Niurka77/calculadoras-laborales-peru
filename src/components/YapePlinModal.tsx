@@ -7,8 +7,8 @@ interface YapePlinModalProps {
 }
 
 const NUMEROS = {
-  yape: '999 888 777',
-  plin: '999 888 777',
+  yape: '906 877 812',
+  plin: '906 877 812',
 };
 
 export default function YapePlinModal({ isOpen, onClose }: YapePlinModalProps) {
@@ -86,7 +86,7 @@ export default function YapePlinModal({ isOpen, onClose }: YapePlinModalProps) {
           </div>
 
           <a
-            href={`https://wa.me/51999888777?text=${whatsappMsg}`}
+            href={`https://wa.me/51906877812?text=${whatsappMsg}`}
             target="_blank"
             rel="noopener noreferrer"
             className="flex items-center justify-center gap-2 w-full bg-green-500 hover:bg-green-600 text-white py-3 rounded-xl font-bold text-sm transition-colors"
