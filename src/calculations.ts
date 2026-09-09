@@ -33,7 +33,7 @@ export function calcularDescuentoPension(sueldo: number, sistema: SistemaPension
   }
   const afp = AFP_COMISIONES[sistema];
   const comision = tipoComision === "flujo" ? afp.flujo : afp.mixta;
-  return sueldo * (comision + afp.seguro);
+  return sueldo * (0.10 + comision + afp.seguro);
 }
 
 export function calcularIR5ta(anualBruto: number): number {
@@ -62,7 +62,7 @@ export function calcularSueldoNeto(
   const descuentoPension = calcularDescuentoPension(totalIngresos, sistema, tipoComision);
 
   const gratificacionMensual = (sueldo * 12) / 14;
-  const remuneracionAnual = totalIngresos * 12 + sueldoBruto * 2;
+  const remuneracionAnual = sueldo * 12 + sueldo * 2;
   const rentaNeta = Math.max(0, remuneracionAnual - UITx7);
   const irAnual = calcularIR5ta(rentaNeta);
   const irMensual = irAnual / 12;
@@ -91,7 +91,6 @@ export function calcularGratificacion(sueldo: number) {
   const bonificacion = gratificacion * 0.09;
   const essalud = gratificacion * 0.09;
   const total = gratificacion + bonificacion;
-  const costoTotal = total + essalud;
 
   return {
     sueldo,
@@ -99,7 +98,6 @@ export function calcularGratificacion(sueldo: number) {
     bonificacion,
     essalud,
     total,
-    costoTotal,
     tope: UIT * 6,
     aplicaTope: sueldo * 6 > UIT * 6,
   };
