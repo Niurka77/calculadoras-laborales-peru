@@ -46,12 +46,26 @@ barra "Para ti", iconos de likes/comentarios/compartir animados,
 usuario @calculadoras.pe, sonido original, contador de vistas en vivo,
 nav inferior y un dedo que toca la pantalla.
 
-### Al subirlos a TikTok
+### Al subirlos a TikTok (paso a paso, <1 min cada video)
 
-1. Sube el MP4 directo (no lo grabes de nuevo)
-2. Elige un sonido en tendencia como MUSICA (el video ya no lleva audio)
-3. En el campo de descripcion usa el texto del archivo TiktokPrompts.md
-4. En el boton de musica cambia la etiqueta a tu cancion elegida
+1. Sube el MP4 directo desde el celular (`videos-mp4/`) **sin audio** (ya esta mudo a proposito).
+2. En la pantalla "Ajuntar clip" convierte el clip con el boton "Convertir en foto" NO; deja el video.
+3. Toca **"Sonido"** y busca una cancion **en tendencia** (no pongas audio externo:
+   TikTok lo silencia y solo su biblioteca de sonidos sube el algoritmo).
+4. Ajusta el volumen de la cancion al 100% y, si quieres, sincroniza el momento del
+   "reveal" (el conteo verde) con el beat usando "Ajustes" > avanzado.
+5. En "Descripcion" pega el texto + hashtags del archivo `Tiktoprompts.md`.
+6. En el icono de la musica que aparece al publicar, deja la etiqueta de la cancion
+   elegida (el video ya no muestra "sonido original").
+7. Publica. No mas de 1-2 videos por dia para no parecer cuenta automatizada.
+
+### Como se ve el video (estilo moderno)
+
+- Titulo gigante con tipografia de tendencia (Anton) + sombra 3D sobre la cifra del ejemplo
+- Barra de progreso que se llena: "calculando..."
+- Reveal del resultado final con sacudida de pantalla + lluvia de emojis 💸🤑
+- Tarjeta de la calculadora real como prueba + boton de llamada a la accion
+- Barra "Para ti", likes/vistas animados, disco de musica y nav inferior de TikTok
 
 ## Nota
 
