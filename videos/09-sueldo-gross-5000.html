@@ -1,0 +1,138 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>“Ganas S/ 5,000” dijiste.</title>
+<style>
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;700;900&display=swap');
+* { margin: 0; padding: 0; box-sizing: border-box; }
+html, body { height: 100%; }
+body {
+  font-family: 'Inter', system-ui, sans-serif;
+  background: #0a0f1e;
+  display: flex; align-items: center; justify-content: center;
+  overflow: hidden;
+}
+.phone {
+  width: 400px; height: 800px;
+  max-width: 100vw; max-height: 100vh;
+  aspect-ratio: 1/2;
+  background: #0F172A;
+  border-radius: 40px;
+  padding: 26px;
+  display: flex; flex-direction: column;
+  border: 2px solid #1E3A8A;
+  box-shadow: 0 0 60px rgba(30,58,138,.25);
+  position: relative;
+}
+.top { display: flex; justify-content: space-between; align-items: center; opacity: 0; }
+.logo { display: flex; align-items: center; gap: 6px; color: #fff; font-weight: 700; font-size: 14px; }
+.logo .dot { width: 9px; height: 9px; border-radius: 50%; background: #059669; }
+.tab { background: #059669; color: #fff; font-size: 11px; font-weight: 700; padding: 6px 14px; border-radius: 20px; }
+.card { background: #1E293B; border-radius: 22px; padding: 20px; margin-top: 18px; opacity: 0; }
+.field label { color: #94A3B8; font-size: 11px; font-weight: 700; text-transform: uppercase; letter-spacing: .5px; }
+.sueldo { color: #fff; font-size: 54px; font-weight: 900; margin-top: 6px; font-variant-numeric: tabular-nums; }
+.sueldo::after { content: ''; width: 3px; height: 42px; background: #059669; margin-left: 5px; vertical-align: -7px; }
+.loader { color: #94A3B8; font-size: 12px; margin-top: 10px; opacity: 0; }
+.loader .spin { display: inline-block; animation: rotate 1s linear infinite; }
+@keyframes rotate { to { transform: rotate(360deg); } }
+.row { display: flex; justify-content: space-between; color: #CBD5E1; font-size: 13px; margin-top: 12px; opacity: 0; }
+.row span + span { font-weight: 700; }
+.result {
+  background: linear-gradient(135deg, #059669, #047857);
+  border-radius: 22px; padding: 20px; margin-top: 14px;
+  opacity: 0; transform: scale(.9);
+}
+.result .label { color: rgba(255,255,255,.85); font-size: 12px; font-weight: 700; text-transform: uppercase; letter-spacing: .5px; }
+.result .big { color: #fff; font-size: 46px; font-weight: 900; margin-top: 4px; font-variant-numeric: tabular-nums; }
+.compare { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; margin-top: 16px; opacity: 0; transform: scale(.92); }
+.cbox { background: #1E293B; border-radius: 18px; padding: 16px; text-align: center; }
+.cbox .l { color: #94A3B8; font-size: 11px; font-weight: 700; }
+.cbox .v { color: #fff; font-size: 30px; font-weight: 900; margin-top: 6px; font-variant-numeric: tabular-nums; }
+.cbox.hl { background: linear-gradient(135deg, #059669, #047857); }
+.cbox.hl .l, .cbox.hl .v { color: #fff; }
+.hook { margin-top: 20px; color: #fff; font-size: 23px; font-weight: 900; line-height: 1.4; opacity: 0; transform: translateY(12px); }
+.hook span { display: block; }
+.hook span:nth-child(2) { color: #FCD34D; }
+.cta { margin-top: auto; color: #059669; font-size: 14px; font-weight: 700; text-align: center; opacity: 0; transform: translateY(12px); }
+.tags { display: flex; flex-wrap: wrap; gap: 7px; margin-top: 14px; justify-content: center; opacity: 0; transform: translateY(12px); }
+.tag { background: #1E3A8A; color: #93C5FD; font-size: 10px; padding: 5px 11px; border-radius: 20px; font-weight: 600; }
+.badge { position: absolute; top: -8px; right: -10px; background: #F59E0B; color: #0F172A; font-size: 10px; font-weight: 900; padding: 4px 9px; border-radius: 20px; transform: rotate(5deg); }
+.desc { color: #64748B; font-size: 10px; text-align: center; margin-top: 12px; }
+
+#app.run .top { opacity: 1; animation: animDown .5s ease .5s both; }
+#app.run .card { opacity: 1; animation: animPop .45s ease 1.6s both; }
+#app.run .sueldo::after { display: inline-block; animation: blink .7s steps(1) 0s 3; }
+#app.run .loader { opacity: 1; animation: animFade .3s ease 2.6s both; }
+#app.run .row { opacity: 1; animation: animFade .3s ease 3.4s both; }
+#app.run .result { opacity: 1; animation: animPop .5s cubic-bezier(.175,.885,.32,1.275) 4s both; }
+#app.run .compare { opacity: 1; animation: animPop .5s cubic-bezier(.175,.885,.32,1.275) 4s both; }
+#app.run .hook { opacity: 1; animation: animUp .6s ease 6.2s both; }
+#app.run .cta { opacity: 1; animation: animUp .5s ease 8s both; }
+#app.run .tags { opacity: 1; animation: animUp .5s ease 8.6s both; }
+@keyframes animDown { from { opacity: 0; transform: translateY(-14px); } }
+@keyframes animPop { from { opacity: 0; transform: scale(.9); } }
+@keyframes animUp { from { opacity: 0; transform: translateY(12px); } }
+@keyframes animFade { from { opacity: 0; } }
+@keyframes blink { 50% { opacity: 0; } }
+
+</style>
+</head>
+<body>
+<div class="phone" id="app">
+  <div class="top">
+    <div class="logo"><span class="dot"></span> Calculadoras Laborales</div>
+    <span class="tab">Sueldo Neto</span>
+  </div>
+  <div class="card">
+    <div class="field"><label>Sueldo Bruto Mensual</label></div>
+    <div class="sueldo">S/ 5,000</div>
+    <div class="loader"><span class="spin">⟳</span>&nbsp; Calculando AFP + 5ta categoría...</div>
+    
+    <div class="row"><span>Descuento pensión</span><span>- S/ 669.67</span></div>
+    <div class="result" id="result">
+      <div class="label">Sueldo Neto</div>
+      <div class="big" id="valor">S/ 0.00</div>
+    </div>
+  </div>
+  <div class="hook"><span>“Ganas S/ 5,000” dijiste.</span><span>Entre AFP + 5ta categoría te quedas con...</span></div>
+  <div class="tags" id="tags"><span class="tag">#SueldoGross</span><span class="tag">#NegociacionSalarial</span><span class="tag">#ImpuestoRenta</span><span class="tag">#Peru</span></div>
+  <div class="cta">Nunca negocies sin calcular → calculadoras-laborales-peru.vercel.app</div>
+  <div class="desc">Material de apoyo - graba con OBS o grabadora del celular</div>
+</div>
+<script>
+
+const app = document.getElementById('app');
+let raf = null;
+function countUp(id, val, delay) {
+  const el = document.getElementById(id);
+  const dur = 1500;
+  let t0 = null;
+  function step(ts) {
+    if (!t0) t0 = ts;
+    const p = Math.min((ts - t0) / dur, 1);
+    const e = 1 - Math.pow(1 - p, 3);
+    el.textContent = 'S/ ' + (val * e).toFixed(2);
+    if (p < 1) requestAnimationFrame(step);
+  }
+  setTimeout(() => requestAnimationFrame(step), delay);
+}
+function play() {
+  app.classList.add('run');
+  countUp('valor', 4330.33, 4200);
+  
+}
+function restart() {
+  app.classList.remove('run');
+  void app.offsetWidth;
+  cancelAnimationFrame(raf);
+  setTimeout(() => { document.getElementById('valor').textContent = 'S/ 0.00'; if (document.getElementById('v2')) document.getElementById('v2').textContent = '0.00'; }, 100);
+  setTimeout(play, 200);
+}
+window.addEventListener('load', play);
+setInterval(restart, 11700);
+
+</script>
+</body>
+</html>
