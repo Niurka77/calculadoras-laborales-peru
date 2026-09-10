@@ -1,6 +1,6 @@
 import { chromium } from 'playwright';
 import ffmpegPath from 'ffmpeg-static';
-import { spawn } from 'node:child_process';
+import { spawn, spawnSync } from 'node:child_process';
 import { mkdirSync, readdirSync, existsSync } from 'node:fs';
 import { join } from 'node:path';
 
@@ -49,6 +49,13 @@ function convertToMp4(webmPath, outPath, seekSec) {
   });
 }
 
+function getDurationSec(file) {
+  const r = spawnSync(ffmpegPath, ['-i', file], { encoding: 'utf8' });
+  const m = (r.stderr || '').match(/Duration: (\d+):(\d+):([\d.]+)/);
+  if (!m) return 0;
+  return (+m[1]) * 3600 + (+m[2]) * 60 + parseFloat(m[3]);
+}
+
 async function renderScene(browser, htmlFile, index) {
   const page = await browser.newPage({
     viewport: { width: 1080, height: 1920 },
@@ -61,18 +68,20 @@ async function renderScene(browser, htmlFile, index) {
 
   await page.goto('file:///' + join(VIDEOS_DIR, htmlFile).replace(/\\/g, '/'), { waitUntil: 'load' });
   await page.waitForFunction(() => window.__started, null, { timeout: 20000 });
-  const startedAt = await page.evaluate(() => window.__startedAt);
-  const deadMs = Math.max(startedAt - 0, 0);
-
-  await page.waitForTimeout(DURATION_MS + deadMs + 300);
+  await page.waitForTimeout(DURATION_MS + 900);
 
   const video = page.video();
   await page.close();
   if (!video) throw new Error('no video for ' + htmlFile);
   const webmPath = await video.path();
 
+  // La grabacion empieza antes de la navegacion (calentamiento de VCR): el play()
+  // ocurre en rec-time = D - (DURATION + 0.9). Buscar para iniciar en play().
+  const durSec = getDurationSec(webmPath);
+  const seekSec = Math.max(0, durSec - (DURATION_MS + 900) / 1000);
+
   const outPath = join(OUT_DIR, htmlFile.replace('.html', '.mp4'));
-  await convertToMp4(webmPath, outPath, deadMs / 1000 - 0.05);
+  await convertToMp4(webmPath, outPath, seekSec);
   console.log(`[${index + 1}/${scenes.length}] ${htmlFile} -> ${outPath}`);
 }
 

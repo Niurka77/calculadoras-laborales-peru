@@ -54,7 +54,7 @@ for (const v of videos) {
   const file = join(OUT_DIR, v);
   const s1 = frameStats(file, 1.1);
   const s2p = frameStats(file, 2.2);
-  const s3 = frameStats(file, 3.0);
+  const s3 = frameStats(file, 2.4);
   const s7 = frameStats(file, 7.5);
 
   const tituloEnFrame = s1 && s1.white >= 120;
